@@ -1,0 +1,1 @@
+sudo apt update && sudo apt install nala && sudo nala install cli-youtube.deb

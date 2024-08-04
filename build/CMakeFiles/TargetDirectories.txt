@@ -1,0 +1,3 @@
+/home/antho/Documentos/Computer-Engineering/programming/Lenguaje_C/CLIYoutube/build/CMakeFiles/CLIYoutube.dir
+/home/antho/Documentos/Computer-Engineering/programming/Lenguaje_C/CLIYoutube/build/CMakeFiles/edit_cache.dir
+/home/antho/Documentos/Computer-Engineering/programming/Lenguaje_C/CLIYoutube/build/CMakeFiles/rebuild_cache.dir
