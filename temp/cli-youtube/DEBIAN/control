@@ -1,0 +1,9 @@
+Package: cli-youtube
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: libc6 (>= 2.29), libglib2.0-0 (>= 2.58.3), libgtk-3-0 (>= 3.24.5), ytfzf, chafa, kitty, imagemagick, mpv, python3-pip, python3-venv, ffmpegthumbnailer, ueberzug, ffmpeg, pipx
+Maintainer: Anthony <fe0j22o9q@mozmail.com>
+Description: CLI YouTube application
+ A simple CLI application for managing YouTube subscriptions and searches.

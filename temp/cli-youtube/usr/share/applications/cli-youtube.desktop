@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=CLI YouTube
+Comment=A simple CLI application for managing YouTube subscriptions and searches
+Exec=kitty -e /usr/local/launch_cli_youtube.sh
+Icon=cli-youtube
+Terminal=true
+Type=Application
+Keywords=Terminal;YouTube;CLI;
+Categories=Utility;
+Path=
+StartupNotify=false

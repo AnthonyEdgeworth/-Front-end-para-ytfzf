@@ -1,0 +1,50 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Configure CLIYoutube with CMake",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                ".."
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Configure the CLIYoutube project using CMake"
+        },
+        {
+            "label": "Build CLIYoutube with CMake",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build"
+            ],
+            "dependsOn": "Configure CLIYoutube with CMake",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Build the CLIYoutube project using CMake"
+        },
+        {
+            "label": "Run CLIYoutube",
+            "type": "process",
+            "command": "${workspaceFolder}/build/cli-youtube",
+            "dependsOn": "Build CLIYoutube with CMake",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Run the CLIYoutube executable"
+        }
+    ]
+}

@@ -1,0 +1,72 @@
+#!/bin/bash
+
+set -e
+
+echo "Iniciando el script de post-instalación..."
+
+# Obtener el nombre de usuario original antes de sudo
+USERNAME=$(logname)
+USER_HOME=$(eval echo ~$USERNAME)
+
+# Crear un entorno virtual temporario
+TEMP_VENV=$(mktemp -d)
+echo "Creando entorno virtual en $TEMP_VENV"
+python3 -m venv "$TEMP_VENV"
+source "$TEMP_VENV/bin/activate"
+
+# Verificar e instalar yt-dlp usando pipx si no está instalado
+if ! sudo -u "$USERNAME" pipx list | grep -q 'yt-dlp'; then
+    echo "yt-dlp no está instalado. Instalando..."
+    if ! sudo -u "$USERNAME" pipx install yt-dlp; then
+        echo "Error: No se pudo instalar yt-dlp." >&2
+        deactivate
+        rm -rf "$TEMP_VENV"
+        exit 1
+    fi
+else
+    echo "yt-dlp ya está instalado. Omite la instalación."
+fi
+
+# Limpiar el entorno virtual temporario
+deactivate
+rm -rf "$TEMP_VENV"
+
+echo "Post instalación completada."
+
+# Construir la ruta del entorno virtual de yt-dlp
+YT_DLP_VENV="$USER_HOME/.local/pipx/venvs/yt-dlp"
+
+# Crear el archivo launch_cli_youtube.sh en /usr/local/
+LAUNCH_SCRIPT="/usr/local/launch_cli_youtube.sh"
+
+sudo bash -c "cat << EOF > $LAUNCH_SCRIPT
+#!/bin/bash
+
+source \"$YT_DLP_VENV/bin/activate\"
+
+if [ \$? -ne 0 ]; then
+    echo \"Error al activar el entorno virtual.\"
+    read -p \"Presiona enter para cerrar\"
+    exit 1
+fi
+
+echo \"Entorno virtual activado.\"
+
+# Ejecutar cli-youtube
+/usr/local/cli-youtube
+
+if [ \$? -ne 0 ]; then
+    echo \"Error al ejecutar cli-youtube.\"
+    read -p \"Presiona enter para cerrar\"
+    exit 1
+fi
+
+echo \"Script ejecutado correctamente.\"
+read -p \"Presiona enter para cerrar\"
+EOF"
+
+# Hacer que el script sea ejecutable con permisos de root
+sudo chmod +x "$LAUNCH_SCRIPT"
+
+echo "El script launch_cli_youtube.sh ha sido creado en /usr/local/ y es ejecutable."
+
